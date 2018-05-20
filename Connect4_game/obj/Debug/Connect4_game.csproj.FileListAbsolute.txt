@@ -1,0 +1,15 @@
+C:\Users\rowan\source\repos\Connect4_game\Connect4_game\obj\Debug\Connect4_game.csprojResolveAssemblyReference.cache
+C:\Users\rowan\source\repos\Connect4_game\Connect4_game\obj\Debug\MainWindow.g.cs
+C:\Users\rowan\source\repos\Connect4_game\Connect4_game\obj\Debug\App.g.cs
+C:\Users\rowan\source\repos\Connect4_game\Connect4_game\obj\Debug\Connect4_game_MarkupCompile.cache
+C:\Users\rowan\source\repos\Connect4_game\Connect4_game\obj\Debug\Connect4_game_MarkupCompile.lref
+C:\Users\rowan\source\repos\Connect4_game\Connect4_game\bin\Debug\Connect4_game.exe.config
+C:\Users\rowan\source\repos\Connect4_game\Connect4_game\bin\Debug\Connect4_game.exe
+C:\Users\rowan\source\repos\Connect4_game\Connect4_game\bin\Debug\Connect4_game.pdb
+C:\Users\rowan\source\repos\Connect4_game\Connect4_game\obj\Debug\MainWindow.baml
+C:\Users\rowan\source\repos\Connect4_game\Connect4_game\obj\Debug\Connect4_game.g.resources
+C:\Users\rowan\source\repos\Connect4_game\Connect4_game\obj\Debug\Connect4_game.Properties.Resources.resources
+C:\Users\rowan\source\repos\Connect4_game\Connect4_game\obj\Debug\Connect4_game.csproj.GenerateResource.cache
+C:\Users\rowan\source\repos\Connect4_game\Connect4_game\obj\Debug\Connect4_game.csproj.CoreCompileInputs.cache
+C:\Users\rowan\source\repos\Connect4_game\Connect4_game\obj\Debug\Connect4_game.exe
+C:\Users\rowan\source\repos\Connect4_game\Connect4_game\obj\Debug\Connect4_game.pdb
