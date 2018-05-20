@@ -23,6 +23,7 @@ namespace Connect4_game
         #region Private members
         private MarkType[][] columns;
         private MarkType[] newRow;
+        private bool isPlayer1Turn;
         #endregion
 
         public MainWindow()
@@ -52,6 +53,8 @@ namespace Connect4_game
                 }
                 columns[i] = newRow;
             }
+            // set player 1 turn to true
+            isPlayer1Turn = true;
         }
 
         private void AddTextBox(int i, int k)
@@ -94,10 +97,15 @@ namespace Connect4_game
                 rowIndex = Array.LastIndexOf(columnRows, MarkType.Free);
             }
 
+            MarkType playerMarkType = isPlayer1Turn ? MarkType.Cross : MarkType.Nought;
+            String playerMarkstring = isPlayer1Turn ? "X" : "O";
             FindChild<TextBlock>(Container, "TextBlock"
-                + columnIndex.ToString() + rowIndex).Text = "X";
-            columnRows[rowIndex] = MarkType.Cross;
-            
+                + columnIndex.ToString() + rowIndex).Text = playerMarkstring;
+            columnRows[rowIndex] = playerMarkType;
+
+            // Alternate player - I actually quite like this approach
+            isPlayer1Turn = !isPlayer1Turn; 
+
         }
 
         // The Below FindChild method is from the following site:
