@@ -24,19 +24,42 @@ namespace Connect4_game
         private MarkType[][] columns;
         private MarkType[] newRow;
         private bool isPlayer1Turn;
+        private bool isGameOver;
         #endregion
 
         public MainWindow()
         {
             InitializeComponent();
+            SetUpArray();   // This should actually not happen every time a new game is started.
+                            // Should instead happen when the program is launched.
+                            // On NewGame() event, the Values should simply all be set to blank
             NewGame();
         }
 
         private void NewGame()
         {
-            SetUpArray();   // This should actually not happen every time a new game is started.
-                            // Should instead happen when the program is launched.
-                            // On NewGame() event, the Values should simply all be set to blank
+            // Reset all values in new array
+            for (int i = 0; i < columns.Length; i++)
+            {
+                var newRow = columns[i];
+                for (int k = 0; k < newRow.Length; k++)
+                {
+                    newRow[k] = MarkType.Free;
+                    //Also reset text box values
+                    ResetTextBox(i, k);
+                }
+            }
+            // set player 1 turn to true
+            isPlayer1Turn = true;
+            isGameOver = false;
+        }
+
+        private void ResetTextBox(int i, int k)
+        {
+            TextBlock selectedTB = FindChild<TextBlock>(Container,
+                "TextBlock" + i.ToString() + k.ToString());
+            selectedTB.Text = String.Empty;
+            selectedTB.Foreground = Brushes.Black;
         }
 
         private void SetUpArray()
@@ -75,6 +98,12 @@ namespace Connect4_game
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (isGameOver)
+            {
+                NewGame();
+                return;
+            }
+            
             //cast the sender to a button
             var button = (Button)sender;
 
@@ -108,9 +137,26 @@ namespace Connect4_game
             }
             columnRows[rowIndex] = playerMarkType;
 
+            // Check if game has ended
+            CheckIfGamoOver();
+
+
             // Alternate player - I actually quite like this approach
             isPlayer1Turn = !isPlayer1Turn; 
 
+        }
+
+        private void CheckIfGamoOver()
+        {
+            // Check if any more moves can be made
+            foreach (var markArray in columns)
+            {
+                if (markArray.Contains(MarkType.Free))
+                {
+                    return;
+                }
+            }
+            isGameOver = true;
         }
 
         // The Below FindChild method is from the following site:
