@@ -3,6 +3,12 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Specific to this project (visual studio)
+.vs/Connect4_game/v15/.suo
+.vs/Connect4_game/v15/Server/sqlite3/storage.ide
+.vs/Connect4_game/v15/Server/sqlite3/storage.ide-shm
+.vs/Connect4_game/v15/Server/sqlite3/storage.ide-wal
+
 # User-specific files
 *.suo
 *.user
