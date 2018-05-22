@@ -99,8 +99,13 @@ namespace Connect4_game
 
             MarkType playerMarkType = isPlayer1Turn ? MarkType.Cross : MarkType.Nought;
             String playerMarkstring = isPlayer1Turn ? "X" : "O";
-            FindChild<TextBlock>(Container, "TextBlock"
-                + columnIndex.ToString() + rowIndex).Text = playerMarkstring;
+            TextBlock selectedTB = FindChild<TextBlock>(Container, 
+                "TextBlock" + columnIndex.ToString() + rowIndex);
+            selectedTB.Text = playerMarkstring;
+            if (isPlayer1Turn)
+            {
+                selectedTB.Foreground = Brushes.Red;
+            }
             columnRows[rowIndex] = playerMarkType;
 
             // Alternate player - I actually quite like this approach
