@@ -30,9 +30,7 @@ namespace Connect4_game
         public MainWindow()
         {
             InitializeComponent();
-            SetUpArray();   // This should actually not happen every time a new game is started.
-                            // Should instead happen when the program is launched.
-                            // On NewGame() event, the Values should simply all be set to blank
+            SetUpArray();   
             NewGame();
         }
 
@@ -49,22 +47,14 @@ namespace Connect4_game
                     ResetTextBox(i, k);
                 }
             }
-            // set player 1 turn to true
+            // set player 1 turn to true and gameover to false
             isPlayer1Turn = true;
             isGameOver = false;
         }
 
-        private void ResetTextBox(int i, int k)
-        {
-            TextBlock selectedTB = FindChild<TextBlock>(Container,
-                "TextBlock" + i.ToString() + k.ToString());
-            selectedTB.Text = String.Empty;
-            selectedTB.Foreground = Brushes.Black;
-        }
-
         private void SetUpArray()
         {
-            // Set up new array
+            // Set up new array, columns
             columns = new MarkType[8][];
             for (int i = 0; i < columns.Length; i++)
             {
@@ -76,13 +66,12 @@ namespace Connect4_game
                 }
                 columns[i] = newRow;
             }
-            // set player 1 turn to true
-            isPlayer1Turn = true;
         }
 
         private void AddTextBox(int i, int k)
         {
-            //Add TextBlock object to position (i,k) in the Grid
+            // Add TextBlock object to position (i,k) in the Grid
+            // Corresponding to position (i,k) in the columns array
             TextBlock tblock = new TextBlock()
             {
                 //Text = "X",
@@ -94,6 +83,15 @@ namespace Connect4_game
             Grid.SetColumn(tblock, i);
             Grid.SetRow(tblock, k);
             Container.Children.Add(tblock);
+        }
+
+        private void ResetTextBox(int i, int k)
+        {
+            // Reset the value of TextBlock at position (i,k) in the Grid
+            TextBlock selectedTB = FindChild<TextBlock>(Container,
+                "TextBlock" + i.ToString() + k.ToString());
+            selectedTB.Text = String.Empty;
+            selectedTB.Foreground = Brushes.Black;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -110,10 +108,6 @@ namespace Connect4_game
             //find the button's position in the array
             var columnIndex = Grid.GetColumn(button);
 
-            // Simulate Drop - Cannot simulate the drop as an 'animation', since the grid seems to
-            // wait for all computations done in the background to end before it updates the UI. So 
-            // it just looks like lag more than anything else...
-
             // Get index of 'lowest' empty cell
             var columnRows = columns[columnIndex];
             int rowIndex;
@@ -126,11 +120,14 @@ namespace Connect4_game
                 rowIndex = Array.LastIndexOf(columnRows, MarkType.Free);
             }
 
+            // Fill grid with 'X/O' and column array with corresponding MarkType
             MarkType playerMarkType = isPlayer1Turn ? MarkType.Cross : MarkType.Nought;
             String playerMarkstring = isPlayer1Turn ? "X" : "O";
             TextBlock selectedTB = FindChild<TextBlock>(Container, 
                 "TextBlock" + columnIndex.ToString() + rowIndex);
             selectedTB.Text = playerMarkstring;
+
+            // Set font color to Red on Player 1's turn
             if (isPlayer1Turn)
             {
                 selectedTB.Foreground = Brushes.Red;
@@ -140,23 +137,30 @@ namespace Connect4_game
             // Check if game has ended
             CheckIfGamoOver();
 
-
             // Alternate player - I actually quite like this approach
             isPlayer1Turn = !isPlayer1Turn; 
-
         }
 
         private void CheckIfGamoOver()
         {
-            // Check if any more moves can be made
-            foreach (var markArray in columns)
+            if (IsDraw())
             {
-                if (markArray.Contains(MarkType.Free))
+                isGameOver = true;
+            }
+        }
+
+        private bool IsDraw()
+        {
+            // Check if any more moves can be made
+            // Only need to check the first/highest row
+            for (int i = 0; i < columns.Length; i++)
+            {
+                if (columns[i][0] == MarkType.Free)
                 {
-                    return;
+                    return false;
                 }
             }
-            isGameOver = true;
+            return true;
         }
 
         // The Below FindChild method is from the following site:
